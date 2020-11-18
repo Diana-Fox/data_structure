@@ -1,6 +1,9 @@
 package ArrayList
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 //定义一个接口
 type List interface {
@@ -51,5 +54,48 @@ func (list *ArrayList) Append(value interface{}) {
 }
 
 func (list *ArrayList) String() string {
+	return fmt.Sprint(list.dataStore)
+}
 
+func (list *ArrayList) Set(index int, newval interface{}) error {
+	if index < 0 || index >= list.Size() {
+		return errors.New("数组角标越界")
+	}
+	list.dataStore[index] = newval
+	return nil
+}
+func (list *ArrayList) checkIsFull() {
+	//判断内存的使用，开辟更大的空间
+	if list.theSize == cap(list.dataStore) {
+		//make如果第二个参数为0，则没真正开辟内存
+		newDataStore := make([]interface{}, 2*list.theSize, 2*list.theSize) //开辟双倍内存
+		for i := 0; i < list.theSize; i++ {
+			newDataStore[i] = list.dataStore[i]
+		}
+		list.dataStore = newDataStore //赋值
+	}
+}
+func (list *ArrayList) Insert(index int, value interface{}) error {
+	if index < 0 || index >= list.Size() {
+		return errors.New("数组角标越界")
+	}
+	list.checkIsFull()                               //检测内存
+	list.dataStore = list.dataStore[:list.theSize+1] //插入数据时先移动内存
+	for i := list.theSize; i > index; i-- {
+		list.dataStore[i] = list.dataStore[i-1]
+	}
+	list.dataStore[index] = value
+	return nil
+}
+func (list *ArrayList) Clear() {
+
+}
+func (list *ArrayList) Delete(index int) error {
+	if index < 0 || index >= list.Size() {
+		return errors.New("数组角标越界")
+	}
+	//先把0-index的复制出来，再从index+1位置复制到末尾
+	list.dataStore = append(list.dataStore[:index], list.dataStore[index+1:])
+	list.theSize--
+	return nil
 }
