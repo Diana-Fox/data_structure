@@ -16,7 +16,8 @@ type List interface {
 	Append(value interface{})                  //追加
 	Clear()                                    //清空
 	Delete(index int) error                    //删除
-	String() string
+	String() string                            //返回字符串
+	Iterator() Iterator                        //迭代器
 }
 
 //定义一个结构体
