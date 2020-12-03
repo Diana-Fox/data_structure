@@ -25,6 +25,7 @@ func NewStack() *Stack {
 func (mystack *Stack) Clean() { //清空
 	mystack.dataSource = make([]interface{}, 0, 10)
 	mystack.currentsize = 0
+	mystack.capsize = 10
 }
 func (mystack *Stack) Size() int { //大小
 	return mystack.currentsize
