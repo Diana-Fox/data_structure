@@ -2,12 +2,24 @@ package main
 
 import (
 	"./ArrayList"
-	"./StackArray"
 	"fmt"
 )
 
 func main() {
-	mystack := StackArray.NewStack()
+	mystack := ArrayList.NewArrayListStackX()
+	mystack.Push(1)
+	mystack.Push(2)
+	mystack.Push(3)
+	mystack.Push(4)
+	for it := mystack.Myit; it.HasNext(); {
+		item, _ := it.Next()
+		fmt.Println(item)
+	}
+}
+
+func main4() {
+	//mystack:=ArrayList.NewArrayListStack()//:= StackArray.NewStack()
+	mystack := ArrayList.NewArrayListStackX()
 	mystack.Push(1)
 	mystack.Push(2)
 	mystack.Push(3)
