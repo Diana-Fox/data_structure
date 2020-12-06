@@ -1,48 +1,34 @@
 package main
 
 import (
-	"./ArrayList"
+	"errors"
 	"fmt"
+	"io/ioutil"
 )
 
+//遍历文件下所有目录
+func GetAll(path string, files []string) ([]string, error) {
+	read, err := ioutil.ReadDir(path) //读取文件夹
+	if err != nil {
+		return files, errors.New("文件夹不可读取")
+	}
+	for _, fi := range read { //循环每个文件或者文件夹
+		fulldir := path + "\\" + fi.Name() //构造新的路径
+		if fi.IsDir() {
+			files = append(files, fulldir)
+			files, _ = GetAll(fulldir, files)
+		} else {
+			files = append(files, fulldir)
+		}
+	}
+	return files, nil
+}
+
 func main() {
-	mystack := ArrayList.NewArrayListStackX()
-	mystack.Push(1)
-	mystack.Push(2)
-	mystack.Push(3)
-	mystack.Push(4)
-	for it := mystack.Myit; it.HasNext(); {
-		item, _ := it.Next()
-		fmt.Println(item)
+	path := "D:\\project\\yuge"
+	files := []string{}
+	files, _ = GetAll(path, files)
+	for i := 0; i < len(files); i++ {
+		fmt.Println(files[i])
 	}
-}
-
-func main4() {
-	//mystack:=ArrayList.NewArrayListStack()//:= StackArray.NewStack()
-	mystack := ArrayList.NewArrayListStackX()
-	mystack.Push(1)
-	mystack.Push(2)
-	mystack.Push(3)
-	mystack.Push(4)
-	fmt.Println(mystack.Pop())
-	fmt.Println(mystack.Pop())
-	fmt.Println(mystack.Pop())
-	fmt.Println(mystack.Pop())
-}
-func main2() {
-	var list ArrayList.List = ArrayList.NewArrayList()
-	list.Append("a")
-	list.Append("b")
-	list.Append("c")
-	list.Append("d")
-	for it := list.Iterator(); it.HasNext(); {
-		item, _ := it.Next()
-		fmt.Println(item)
-	}
-
-}
-func main1() {
-	list := ArrayList.NewArrayList()
-	list.Append("a")
-	fmt.Print(list)
 }
