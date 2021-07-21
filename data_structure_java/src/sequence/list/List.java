@@ -1,4 +1,5 @@
-package list;
+package sequence.list;
 
 public interface List {
+
 }
