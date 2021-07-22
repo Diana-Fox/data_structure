@@ -62,6 +62,7 @@ public class IntegerList implements List<Integer> {
         integerNode.setSucc(oldSucc);
         //原后继的前驱为新节点
         oldSucc.setPred(integerNode);
+        this.size++;
     }
 
     @Override
@@ -70,8 +71,20 @@ public class IntegerList implements List<Integer> {
     }
 
     @Override
+    /**
+     * 移除P处节点
+     */
     public void remove(int p) {
-
+        //找到p节点
+        Node<Integer> integerNode = find(p);
+        //取出前驱
+        Node pred = integerNode.getPred();
+        //取出后继
+        Node succ = integerNode.getSucc();
+        //相互指向，因为Java封装的原因，不需要释放
+        pred.setSucc(succ);
+        succ.setPred(pred);
+        size--;
     }
 
     @Override
