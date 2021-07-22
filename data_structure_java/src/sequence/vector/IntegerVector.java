@@ -131,6 +131,53 @@ public class IntegerVector implements IVector<Integer> {
     }
 
     /**
+     * 归并排序
+     *
+     * @param lo
+     * @param hi
+     */
+    public void MergeSort(int lo, int hi) {
+        if (hi - lo < 2)
+            return;
+        //中点为界
+        int mi = (lo + hi) >> 1;
+        //对前半段排序
+        MergeSort(lo, mi);
+        //对后半段排序
+        MergeSort(mi, hi);
+        //归并
+        Merge(lo, mi, hi);
+    }
+
+    /**
+     * 归并算法
+     *
+     * @param lo
+     * @param mi
+     * @param hi
+     */
+    private void Merge(int lo, int mi, int hi) {
+        //计算lo到mi的数据量
+        int lb = mi - lo;
+        //定义一个向量B，存放要归并元素的前半段
+        int[] b = new int[lb];
+        //把前半段的元素复制到b
+        for (int i = 0; i < lb; b[i] = elem[i++]) ;
+        //后半段的数据量
+        int lc = hi - mi;
+        //定义i为在elem的下标，j为b的下标，k为后段的下标
+        for (int i = 0, j = 0, k = 0; j < lb || k < lc; ) {
+            //要是j在lb内，且后半段越界或者目前指向的下标值比b[j]小
+            if ((j < lb) && (lc <= k || b[j] <= elem[mi + k]))
+                //将b中的元素归并到元素中
+                elem[i++] = b[j++];
+            //k在lc的合法范围内，但是b已经越界或者后半段当前下标值小于b
+            if ((k < lc) && (lb <= j || (elem[mi + k] < b[j])))
+                elem[i++] = elem[mi + k++];
+        }
+    }
+
+    /**
      * 冒泡的调用
      */
     private void Bubble() {
