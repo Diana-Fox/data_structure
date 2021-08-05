@@ -118,8 +118,18 @@ public class IntegerList implements List<Integer> {
     }
 
     @Override
-    public void deduplicate() {
-
+    public int deduplicate() {
+        if (size < 2)
+            return 0;
+        int oldSize = size;
+        //第一个元素
+        Node<Integer> node = header.getSucc();
+        //从首节点起
+        int r=1;
+        while (trailer!=(node=node.getSucc())){
+            Node<Integer> integerNode = find(node.data());
+        }
+        return 0;
     }
 
     @Override

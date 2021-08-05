@@ -41,7 +41,7 @@ public interface List<T> {
     int search(T e);
 
     //无序列表剔除重复元素
-    void deduplicate();
+    int deduplicate();
 
     //有序向量剔除重复元素
     void uniquify();
